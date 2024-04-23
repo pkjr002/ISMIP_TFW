@@ -70,3 +70,41 @@ def list_folders_as_multilevel_df_grouped(path):
     df_folders = pd.DataFrame(data, columns=column_names)
     
     return df_folders
+
+
+
+from collections import defaultdict
+
+def list_folders_as_multilevel_df_grouped1(path, aggregation_level=5):
+    """
+    Lists folders in a multi-level DataFrame, grouped by a specified level with remaining paths aggregated.
+    
+    Parameters:
+    - path (str): The root path to start listing folders from.
+    - aggregation_level (int): The depth level at which to start aggregating subfolders into a list. Defaults to 5.
+    
+    Returns:
+    - pd.DataFrame: A DataFrame with each row representing a path, grouped up to the specified level,
+                    and additional subfolders aggregated into a list in the last column.
+    """
+    grouped_paths = defaultdict(list)
+    for root, dirs, files in os.walk(path, topdown=True):
+        dirs.sort()
+        normalized_root = os.path.normpath(root)
+        parts = normalized_root.split(os.sep)
+        
+        # Adjust to group by the specified levels and aggregate the rest
+        key = tuple(parts[:aggregation_level])
+        grouped_paths[key].append('/'.join(parts[aggregation_level:])) if len(parts) > aggregation_level else grouped_paths[key].append('/')
+    
+    data = []
+    for key, values in grouped_paths.items():
+        row = list(key) + [values]  
+        data.append(row)
+    
+    # Adjust the column names based on the specified aggregation level
+    column_names = [f'Level_{i+1}' for i in range(aggregation_level)] + [f'Level_{aggregation_level}_Subfolders']
+    
+    df_folders = pd.DataFrame(data, columns=column_names)
+    
+    return df_folders
