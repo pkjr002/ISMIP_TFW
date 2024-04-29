@@ -1,6 +1,11 @@
 import os
 import pandas as pd
+import requests
+
+from bs4 import BeautifulSoup
+from IPython.display import display, HTML
 from collections import defaultdict
+
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # FUNCTION BLOCK.
@@ -108,3 +113,47 @@ def list_folders_as_multilevel_df_grouped1(path, aggregation_level=5):
     df_folders = pd.DataFrame(data, columns=column_names)
     
     return df_folders
+
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# List var from filename.nc
+def list_var_4m_nc(path2folder,IDX):
+    # List all files in the directory and extract the first part of each filename
+    files = [f for f in os.listdir(path2folder) if os.path.isfile(os.path.join(path2folder, f))]
+    var_parts = []
+    for file in files:
+        if IDX == 'FULL':
+            var_parts.append(file)
+        else:    
+            var_parts.append(file.split('_')[IDX])
+    return var_parts
+
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# Request data table from a URL
+def get_table(this_URL, IDX ):
+
+    url = this_URL
+    # get HTML content
+    response = requests.get(url)
+    html_content = response.text
+    soup = BeautifulSoup(html_content, 'html.parser')
+    
+    # display(HTML(str(soup)))
+    
+    # specific table:
+    tables = soup.find_all('table')
+    display(HTML(str(tables[IDX])))  # Adjust index as necessary
+
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# Get time from *nc
+def regular_time(nc_data):
+
+    time_units = nc_data['time'].units
+    calendar = nc_data['time'].calendar
+    
+    times = netCDF4.num2date(nc_data['time'], units=time_units, calendar=calendar)
+    time_series = pd.to_datetime([date.strftime('%Y-%m-%d %H:%M:%S') for date in times])
+    
+    return(time_series)
