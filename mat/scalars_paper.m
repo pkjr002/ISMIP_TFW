@@ -2,8 +2,8 @@
 %Contact: Helene Seroussi helene.seroussi@jpl.nasa.gov
 
 step=1;
-error('Add the correct path where the model outputs can be found below on the line below')
-datapath='./ISMIP6GriddedData/'; %Change path for ISMIP6 model outputs
+% error('Add the correct path where the model outputs can be found below on the line below')
+datapath='/Volumes/Geek_Boi-Ed/ISMIP6/'; %Change path for ISMIP6 model outputs
 
 yts=365.25*24*3600;
 model_list={'AWI_PISM1','DOE_MALI','ILTS_PIK_SICOPOLIS','IMAU_IMAUICE1','IMAU_IMAUICE2','JPL1_ISSM','LSCE_GRISLI','NCAR_CISM','PIK_PISM1','PIK_PISM2','UCIJPL_ISSM','ULB_FETISH32','ULB_FETISH16','UTAS_ElmerIce','VUB_AISMPALEO','VUW_PISM'}; 
