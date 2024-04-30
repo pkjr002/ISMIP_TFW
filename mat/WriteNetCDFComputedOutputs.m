@@ -105,10 +105,10 @@ netcdf.endDef(ncid);
 netcdf.putVar(ncid,time_var_id,time_data');
 netcdf.putVar(ncid,total_var_id,lim_vector');
 for indsector=1:18,
-eval(['netcdf.putVar(ncid,sector' int2str(indsector) '_var_id,transp(lim_vector_sector' int2str(indsector) '));'])
+eval(['netcdf.putVar(ncid,sector' int2str(indsector) '_var_id,transpose(lim_vector_sector' int2str(indsector) '));'])
 end
 for indregion=1:3,
-eval(['netcdf.putVar(ncid,region' int2str(indregion) '_var_id,transp(lim_vector_region' int2str(indregion) '));'])
+eval(['netcdf.putVar(ncid,region' int2str(indregion) '_var_id,transpose(lim_vector_region' int2str(indregion) '));'])
 end
 netcdf.putVar(ncid,rhoi_var_id,ice_density);
 netcdf.putVar(ncid,rhow_var_id,ocean_density);
