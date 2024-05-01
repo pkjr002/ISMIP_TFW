@@ -1,4 +1,4 @@
-## New estimate of Total Fresh water (including floating ice)  
-This is a repo for creating New estimate of Total Fresh water which will now including floating ice. This will be computed using the the ISMIP6 data archive.  
+## Total Fresh Water (TFW) Forcing estimated from ISMIP6
+This is a repo to track the computation, QC and visualization of a new estimate of TFW forcing that will include the floating ice component. This will be computed using the the raw-ISMIP6 data archive. PostProcessed data will be used with GISS-ModelE. 
 
-Currently this repo will be structured as `mat` and `jupyter` folders which will serve as workspaces. After data is extracted and the new estimate is computed, I will consolidated for data extraction and export. 
+*Note* Currently, this repository is structured with `mat` and `jupyter` folders that serve as workspaces. After the data has been extracted and the new TFW estimate computed, the files in these folders will be cleaned. 
